@@ -19,7 +19,7 @@ void printBoard(int board[][SIZE])
             {
                 element = 'X';
             }
-            else
+            else if(board[i][y] == 2)
             {
                 element = 'O';
             }
@@ -46,11 +46,19 @@ void clearInputBuffer()
     while((garbage = getchar()) != '\n' && garbage != EOF);
 }
 
-bool checkCordinates(int row, int col, int board[][SIZE])
+bool checkCoordinates(int row, int col, int board[][SIZE])
 {
-    if((row < 0 && row > 2) || (col < 0 && col > 2)) return false;
+    if((row < 0 || row > 2) || (col < 0 || col > 2))
+    {
+        printf("Invalid Coordinates.\n");
+        return false;
+    }
 
-    if(board[row][col] != 0) return false;
+    else if(board[row][col] != 0)
+    {
+        printf("That point is already used.\n");
+        return false;
+    }
 
     return true;
 }
@@ -58,4 +66,30 @@ bool checkCordinates(int row, int col, int board[][SIZE])
 void updateBoard(int row, int col, int board[][SIZE])
 {
     board[row][col] = 1;
+}
+
+void clearScreen()
+{
+    printf("\033[2J\033[H");
+}
+
+bool checkWin(int board[][SIZE], int player)
+{
+    //rows
+    if(board[0][0] == player && board[0][1] == player && board[0][2] == player) return true;
+    else if(board[1][0] == player && board[1][1] == player && board[1][2] == player) return true;
+    else if(board[2][0] == player && board[2][1] == player && board[2][2] == player) return true;
+
+    //colums
+    else if(board[0][0] == player && board[1][0] == player && board[2][0] == player) return true;
+    else if(board[0][1] == player && board[1][1] == player && board[2][1] == player) return true;
+    else if(board[0][2] == player && board[1][2] == player && board[2][2] == player) return true;
+
+    //middles
+
+    else if(board[0][0] == player && board[1][1] == player && board[2][2] == player) return true;
+    else if(board[0][2] == player && board[1][1] == player && board[0][0] == player) return true;
+    else return false;
+    
+    
 }
