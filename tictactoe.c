@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include "tictactoe.h"
 
@@ -46,26 +47,30 @@ void clearInputBuffer()
     while((garbage = getchar()) != '\n' && garbage != EOF);
 }
 
-bool checkCoordinates(int row, int col, int board[][SIZE])
+void checkCoordinates(int row, int col, int board[][SIZE], struct errHandling *coordinates)
 {
+
     if((row < 0 || row > 2) || (col < 0 || col > 2))
     {
-        printf("Invalid Coordinates.\n");
-        return false;
+        coordinates->value = false;
+        coordinates->msg = "Invalid Coordinates.\n\0";
+        return;
     }
 
     else if(board[row][col] != 0)
-    {
-        printf("That point is already used.\n");
-        return false;
+    {    
+        coordinates->value = false;
+        coordinates->msg = "Invalid Coordinates.\n\0"; 
+        return;
     }
 
-    return true;
+    coordinates->value = true;
+    return;
 }
 
-void updateBoard(int row, int col, int board[][SIZE])
+void updateBoard(int row, int col, int board[][SIZE], int activePlayer)
 {
-    board[row][col] = 1;
+    board[row][col] = activePlayer;
 }
 
 void clearScreen()
@@ -90,6 +95,22 @@ bool checkWin(int board[][SIZE], int player)
     else if(board[0][0] == player && board[1][1] == player && board[2][2] == player) return true;
     else if(board[0][2] == player && board[1][1] == player && board[0][0] == player) return true;
     else return false;
-    
-    
+}
+
+void cpuChoice(int board[][SIZE], int cpu)
+{
+    srand(time(0));
+    int row = rand() % (3 - 1 + 1) + 1 - 1;
+    int col = rand() % (3 - 1 + 1) + 1 - 1;
+
+    while(board[row][col] != 0)
+    {
+        printf("I'm generating random numbers: %d  %d  \n", row, col);
+        int row = rand() % (3 - 1 + 1) + 1 - 1;
+        int col = rand() % (3 - 1 + 1) + 1 - 1;
+    }
+
+    updateBoard(row, col, board, cpu);
+
+
 }

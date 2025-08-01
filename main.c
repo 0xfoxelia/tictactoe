@@ -16,6 +16,9 @@ int main(void){
     int player = 1;
     int cpu = 2;
 
+
+    struct errHandling coordinates;
+
     printf("Welcome in tictactoe game\n\n");
     
     do
@@ -31,22 +34,24 @@ int main(void){
         int col = getchar() - '0' - 1;
         clearInputBuffer();
 
-        if(checkCoordinates(row, col, board))
-        {
-            thrd_sleep(&(struct timespec){.tv_sec=60}, NULL);
+        checkCoordinates(row, col, board, &coordinates);
+        if(coordinates.value)
+        {    
+            updateBoard(row, col, board, player);
+            cpuChoice(board, cpu);
             clearScreen();
-            updateBoard(row, col, board);
-            //printBoard(board);
         }
         else
         {
-            
+            printf("%s", coordinates.msg);
+            thrd_sleep(&(struct timespec){.tv_sec=10}, NULL);
+            clearScreen();
             continue;
         }
         
-
-        bool win = checkWin(board, player);
-        if(win)
+        
+        bool winPlayer = checkWin(board, player);
+        if(winPlayer)
         {
             printf("You win");
             break;
