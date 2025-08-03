@@ -16,12 +16,11 @@ int main(void){
     int player = 1;
     int cpu = 2;
 
-
     struct errHandling coordinates;
 
     printf("Welcome in tictactoe game\n\n");
     
-    do
+    while(true)
     {
         printBoard(board);
         printf("\n\n");
@@ -35,10 +34,12 @@ int main(void){
         clearInputBuffer();
 
         checkCoordinates(row, col, board, &coordinates);
+        
         if(coordinates.value)
         {    
             updateBoard(row, col, board, player);
-            cpuChoice(board, cpu);
+            clearScreen();
+            printBoard(board);
             clearScreen();
         }
         else
@@ -48,20 +49,41 @@ int main(void){
             clearScreen();
             continue;
         }
-        
-        
-        bool winPlayer = checkWin(board, player);
-        if(winPlayer)
+
+        if(fullBoard(board))
         {
-            printf("You win");
+            if(checkWin(board, player))
+            {
+                printf("You win\n");
+                break;
+            }
+            else if(checkWin(board, cpu))
+            {
+                printf("You lose\n");
+                break;
+            }
+            else {
+                printf("No one is the winner\n");
+                break;
+            }
+        }
+
+        if(checkWin(board, player))
+        {
+            printf("You win\n");
             break;
         }
         
+        cpuChoice(board, cpu);
         
-    
+        if(checkWin(board, cpu))
+        {
+            printf("You lose\n");
+            break;
+        }
     }
-    while(true);
-    
-    return 0;
 
+    printf("\n");
+    printBoard(board);
+    return 0;
 }

@@ -91,26 +91,40 @@ bool checkWin(int board[][SIZE], int player)
     else if(board[0][2] == player && board[1][2] == player && board[2][2] == player) return true;
 
     //middles
-
     else if(board[0][0] == player && board[1][1] == player && board[2][2] == player) return true;
-    else if(board[0][2] == player && board[1][1] == player && board[0][0] == player) return true;
+    else if(board[0][2] == player && board[1][1] == player && board[2][0] == player) return true;
     else return false;
 }
 
 void cpuChoice(int board[][SIZE], int cpu)
-{
-    srand(time(0));
-    int row = rand() % (3 - 1 + 1) + 1 - 1;
-    int col = rand() % (3 - 1 + 1) + 1 - 1;
-
-    while(board[row][col] != 0)
+{    
+    int row;
+    int col;
+    
+    do
     {
-        printf("I'm generating random numbers: %d  %d  \n", row, col);
-        int row = rand() % (3 - 1 + 1) + 1 - 1;
-        int col = rand() % (3 - 1 + 1) + 1 - 1;
-    }
+    srand(time(0));
+    row = rand() % (3 - 1 + 1) + 1 - 1;
+    col = rand() % (3 - 1 + 1) + 1 - 1;
+    //printf("row:%d\tcol:%d", row, col);
+    } while(board[row][col] != 0);
 
     updateBoard(row, col, board, cpu);
+}
 
-
+bool fullBoard(int board[][SIZE])
+{
+    bool full = true;
+    for(int row = 0; row < SIZE; row++)
+    {
+        for(int col = 0; col < SIZE; col++)
+        {
+            if(board[row][col] == 0)
+            {
+                full = false;
+                return full;
+            }
+        }
+    }
+    return full;
 }
