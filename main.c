@@ -18,7 +18,7 @@ int main(void){
 
     struct errHandling coordinates;
 
-    printf("Welcome in tictactoe game\n\n");
+    printf("Welcome in tictactoe game:\n\n");
     
     while(true)
     {
@@ -54,23 +54,23 @@ int main(void){
         {
             if(checkWin(board, player))
             {
-                printf("You win\n");
+                printf("You win.\n");
                 break;
             }
             else if(checkWin(board, cpu))
             {
-                printf("You lose\n");
+                printf("You lose.\n");
                 break;
             }
             else {
-                printf("No one is the winner\n");
+                printf("No one is the winner.\n");
                 break;
             }
         }
 
         if(checkWin(board, player))
         {
-            printf("You win\n");
+            printf("You win.\n");
             break;
         }
         
@@ -78,12 +78,14 @@ int main(void){
         
         if(checkWin(board, cpu))
         {
-            printf("You lose\n");
+            printf("You lose.\n");
             break;
         }
     }
 
-    printf("\n");
+    putchar('\n');
     printBoard(board);
+    putchar('\n');
+    
     return 0;
 }

@@ -6,13 +6,11 @@ struct errHandling
   char* msg;
 };
 
-/*
-struct slotPoints
+struct cell
 {
   int row;
   int col;
 };
-*/
 
 void printBoard(int board[][SIZE]);
 void clearInputBuffer();

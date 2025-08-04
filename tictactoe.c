@@ -9,7 +9,8 @@ void printBoard(int board[][SIZE])
     char element;
 
     for(int i = 0; i < SIZE; i++)
-    {
+    {    
+        putchar('\t');
         for(int y = 0; y < SIZE; y++)
         {
             if(board[i][y] == 0)
@@ -29,14 +30,14 @@ void printBoard(int board[][SIZE])
 
             if(y < SIZE - 1)
             {
-		printf("| ");
+                printf("| ");
             }
 
         }
 	putchar('\n');
         if(i < SIZE - 1)
         {
-	    printf("- - - - -\n");
+            printf("\t- - - - -\n");
         }
     }
 }
@@ -53,14 +54,14 @@ void checkCoordinates(int row, int col, int board[][SIZE], struct errHandling *c
     if((row < 0 || row > 2) || (col < 0 || col > 2))
     {
         coordinates->value = false;
-        coordinates->msg = "Invalid Coordinates.\n\0";
+        coordinates->msg = "Invalid Coordinates. They doesn't exist.\n\0";
         return;
     }
 
     else if(board[row][col] != 0)
     {    
         coordinates->value = false;
-        coordinates->msg = "Invalid Coordinates.\n\0"; 
+        coordinates->msg = "Invalid Coordinates. The cell is already occupied.\n\0"; 
         return;
     }
 
@@ -97,19 +98,36 @@ bool checkWin(int board[][SIZE], int player)
 }
 
 void cpuChoice(int board[][SIZE], int cpu)
-{    
-    int row;
-    int col;
-    
-    do
-    {
-    srand(time(0));
-    row = rand() % (3 - 1 + 1) + 1 - 1;
-    col = rand() % (3 - 1 + 1) + 1 - 1;
-    //printf("row:%d\tcol:%d", row, col);
-    } while(board[row][col] != 0);
+{
+    int available = 0;
 
-    updateBoard(row, col, board, cpu);
+    for(int i = 0; i < SIZE; i++)
+    {
+        for(int j = 0; j < SIZE; j++)
+        {
+            if(board[i][j] == 0) available++;
+        }
+    }
+    
+    struct cell cells[available];
+
+    int index = 0;
+    for(int i = 0; i < SIZE; i++)
+    {
+        for(int j = 0; j < SIZE; j++)
+        {
+            if(board[i][j] == 0)
+            {
+                cells[index].row = i;
+                cells[index].col = j;
+                index++;
+            }
+        }
+    }
+
+    srand(time(0));
+    int random_cell = rand() % ((index - 1) - 0 + 1) + 0;
+    updateBoard(cells[random_cell].row, cells[random_cell].col, board, cpu);
 }
 
 bool fullBoard(int board[][SIZE])
