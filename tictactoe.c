@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
 
 #include "tictactoe.h"
 
@@ -125,7 +124,6 @@ void cpuChoice(int board[][SIZE], int cpu)
         }
     }
 
-    srand(time(0));
     int random_cell = rand() % ((index - 1) - 0 + 1) + 0;
     updateBoard(cells[random_cell].row, cells[random_cell].col, board, cpu);
 }

@@ -7,6 +7,8 @@
 
 int main(void){
 
+    srand(time(0));
+
     int board[][SIZE] = {
         {0, 0, 0},
         {0, 0, 0},
