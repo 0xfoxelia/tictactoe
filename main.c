@@ -45,7 +45,7 @@ int main(void){
         else
         {
             printf("%s", coordinates.msg);
-            thrd_sleep(&(struct timespec){.tv_sec=10}, NULL);
+            thrd_sleep(&(struct timespec){.tv_sec=5}, NULL);
             clearScreen();
             continue;
         }
